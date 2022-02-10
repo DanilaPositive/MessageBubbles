@@ -11,10 +11,10 @@ protocol Preparable {
     func prepare(withViewModel viewModel: PreparableViewModel?)
 }
 
-class PreparableTableCell: UITableViewCell, Preparable {
-    func prepare(withViewModel viewModel: PreparableViewModel?) {}
-}
-
 protocol PreparableViewModel {
     var cellId: String { get }
+}
+
+class PreparableTableCell: UITableViewCell, Preparable {
+    func prepare(withViewModel viewModel: PreparableViewModel?) {}
 }

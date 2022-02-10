@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func initializeWindow() {
+    private func initializeWindow() {
         window = UIWindow(frame: UIScreen.main.bounds)
 
         let chatScreen = ChatScreenAssembly.assemble()

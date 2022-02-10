@@ -7,12 +7,12 @@
 
 import UIKit
 
-class ChatScreenAssembly {
+final class ChatScreenAssembly {
 
     static func assemble() -> UIViewController {
         let tableAdapter = ChatTableViewAdapter()
-        let view = ChatViewController(tableAdapter: tableAdapter)
-        
-        return view
+        let viewController = ChatViewController(tableAdapter: tableAdapter)
+
+        return viewController
     }
 }

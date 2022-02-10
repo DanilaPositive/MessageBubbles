@@ -41,21 +41,32 @@ class InputMessageView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        prepareView()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    private func prepareView() {
         backgroundColor = .messageBubbleColor
+        let topBorder = CALayer()
+        topBorder.frame = CGRect(x: 0, y: 0, width: bounds.width, height: Constants.borderWidth)
+        topBorder.backgroundColor = UIColor.lightGray.cgColor
+        layer.addSublayer(topBorder)
+        clipsToBounds = true
 
         addSubview(textView)
         addSubview(sendButton)
-
+        prepareTextView()
+        prepareSendButton()
+    }
+    
+    private func prepareTextView() {
         textView.leadingAnchor ~= leadingAnchor + Constants.padding
         textView.bottomAnchor ~= bottomAnchor - Constants.padding
         textView.topAnchor ~= topAnchor + Constants.padding
         textViewHeightConstraint = textView.heightAnchor ~= Constants.minTextViewHeight
-
-        sendButton.trailingAnchor ~= trailingAnchor - Constants.buttonPadding
-        sendButton.bottomAnchor ~= bottomAnchor - Constants.buttonPadding
-        sendButton.leadingAnchor ~= textView.trailingAnchor + Constants.buttonPadding
-        sendButton.widthAnchor ~= Constants.buttonItemHeight
-        sendButton.heightAnchor ~= Constants.buttonItemHeight
 
         textView.delegate = self
         textView.isScrollEnabled = false
@@ -64,20 +75,18 @@ class InputMessageView: UIView {
         textView.layer.cornerRadius = Constants.minTextViewHeight / 2
         textView.layer.borderColor = UIColor.lightGray.cgColor
         textView.layer.borderWidth = Constants.borderWidth
+    }
+    
+    private func prepareSendButton() {
+        sendButton.trailingAnchor ~= trailingAnchor - Constants.buttonPadding
+        sendButton.bottomAnchor ~= bottomAnchor - Constants.buttonPadding
+        sendButton.leadingAnchor ~= textView.trailingAnchor + Constants.buttonPadding
+        sendButton.widthAnchor ~= Constants.buttonItemHeight
+        sendButton.heightAnchor ~= Constants.buttonItemHeight
 
         sendButton.tintColor = .lightGray
         sendButton.setImage(UIImage(named: "icon_send"), for: .normal)
         sendButton.addTarget(self, action: #selector(secondButtonTapped(_:)), for: .touchUpInside)
-
-        let topBorder = CALayer()
-        topBorder.frame = CGRect(x: 0, y: 0, width: bounds.width, height: Constants.borderWidth)
-        topBorder.backgroundColor = UIColor.lightGray.cgColor
-        layer.addSublayer(topBorder)
-        clipsToBounds = true
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
     }
 
     @discardableResult

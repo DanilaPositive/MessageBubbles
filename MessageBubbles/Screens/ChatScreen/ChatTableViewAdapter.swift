@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ChatTableViewAdapter: NSObject {
+final class ChatTableViewAdapter: NSObject {
 
     // MARK: - Properties
     var items: [PreparableViewModel] = []

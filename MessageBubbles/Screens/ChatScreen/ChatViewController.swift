@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChatViewController: UIViewController {
+final class ChatViewController: UIViewController {
 
     private let tableView = UITableView().prepareForAutoLayout()
     private let inputTextView = InputMessageView().prepareForAutoLayout()
@@ -76,7 +76,7 @@ class ChatViewController: UIViewController {
 
     @objc
     func tableViewTapped(recognizer: UITapGestureRecognizer) {
-        self.inputTextView.resignFirstResponder()
+        inputTextView.resignFirstResponder()
     }
 
     @objc
@@ -84,8 +84,8 @@ class ChatViewController: UIViewController {
         guard let userInfo = notification.userInfo,
               var keyboardFrame  = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
               let keyboardAnimationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
-        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-        self.inputTextViewBottomConstraint.constant = -keyboardFrame.height + view.safeAreaInsets.bottom
+        keyboardFrame = view.convert(keyboardFrame, from: nil)
+        inputTextViewBottomConstraint.constant = -keyboardFrame.height + view.safeAreaInsets.bottom
         UIView.animate(withDuration: keyboardAnimationDuration) {
             self.view.layoutIfNeeded()
         }
@@ -97,8 +97,8 @@ class ChatViewController: UIViewController {
               var keyboardFrame  = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
               let keyboardAnimationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval,
                 let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt else { return }
-        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-        self.inputTextViewBottomConstraint.constant = 0
+        keyboardFrame = view.convert(keyboardFrame, from: nil)
+        inputTextViewBottomConstraint.constant = 0
         UIView.animate(withDuration: keyboardAnimationDuration, delay: 0, options: UIView.AnimationOptions(rawValue: curve), animations: {
             self.view.layoutIfNeeded()
         }, completion: nil)
@@ -145,11 +145,7 @@ extension ChatViewController: InputMessageViewDelegate {
             deliveryStatus = .none
         } else {
             direction = .outgoing
-            if rand % 3 == 0 {
-                deliveryStatus = .inProgress
-            } else {
-                deliveryStatus = .sended
-            }
+            deliveryStatus = rand % 3 == 0 ? .inProgress : .sended
         }
 
         let sendingTime = DateHelper().string(fromDate: Date(), format: .hhmm_Colon)

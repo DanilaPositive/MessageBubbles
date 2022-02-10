@@ -7,7 +7,7 @@
 
 import UIKit
 
-public extension UIView {
+extension UIView {
 
     enum PinnedSide {
         case top
@@ -55,77 +55,77 @@ public extension UIView {
     }
 }
 
-public struct ConstraintAttribute<T: AnyObject> {
+struct ConstraintAttribute<T: AnyObject> {
     let anchor: NSLayoutAnchor<T>
     let const: CGFloat
 }
 
-public func + <T>(lhs: NSLayoutAnchor<T>, rhs: CGFloat) -> ConstraintAttribute<T> {
+func + <T>(lhs: NSLayoutAnchor<T>, rhs: CGFloat) -> ConstraintAttribute<T> {
     return ConstraintAttribute(anchor: lhs, const: rhs)
 }
 
-public func - <T>(lhs: NSLayoutAnchor<T>, rhs: CGFloat) -> ConstraintAttribute<T> {
+func - <T>(lhs: NSLayoutAnchor<T>, rhs: CGFloat) -> ConstraintAttribute<T> {
     return ConstraintAttribute(anchor: lhs, const: -rhs)
 }
 
 @discardableResult
-public func ~= <T>(lhs: NSLayoutAnchor<T>, rhs: NSLayoutAnchor<T>) -> NSLayoutConstraint {
+func ~= <T>(lhs: NSLayoutAnchor<T>, rhs: NSLayoutAnchor<T>) -> NSLayoutConstraint {
     let constraint = lhs.constraint(equalTo: rhs)
     constraint.isActive = true
     return constraint
 }
 
 @discardableResult
-public func <= <T>(lhs: NSLayoutAnchor<T>, rhs: NSLayoutAnchor<T>) -> NSLayoutConstraint {
+func <= <T>(lhs: NSLayoutAnchor<T>, rhs: NSLayoutAnchor<T>) -> NSLayoutConstraint {
     let constraint = lhs.constraint(lessThanOrEqualTo: rhs)
     constraint.isActive = true
     return constraint
 }
 
 @discardableResult
-public func >= <T>(lhs: NSLayoutAnchor<T>, rhs: NSLayoutAnchor<T>) -> NSLayoutConstraint {
+func >= <T>(lhs: NSLayoutAnchor<T>, rhs: NSLayoutAnchor<T>) -> NSLayoutConstraint {
     let constraint = lhs.constraint(greaterThanOrEqualTo: rhs)
     constraint.isActive = true
     return constraint
 }
 
 @discardableResult
-public func ~= <T>(lhs: NSLayoutAnchor<T>, rhs: ConstraintAttribute<T>) -> NSLayoutConstraint {
+func ~= <T>(lhs: NSLayoutAnchor<T>, rhs: ConstraintAttribute<T>) -> NSLayoutConstraint {
     let constraint = lhs.constraint(equalTo: rhs.anchor, constant: rhs.const)
     constraint.isActive = true
     return constraint
 }
 
 @discardableResult
-public func ~= (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
+func ~= (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
     let constraint = lhs.constraint(equalToConstant: rhs)
     constraint.isActive = true
     return constraint
 }
 
 @discardableResult
-public func <= <T>(lhs: NSLayoutAnchor<T>, rhs: ConstraintAttribute<T>) -> NSLayoutConstraint {
+func <= <T>(lhs: NSLayoutAnchor<T>, rhs: ConstraintAttribute<T>) -> NSLayoutConstraint {
     let constraint = lhs.constraint(lessThanOrEqualTo: rhs.anchor, constant: rhs.const)
     constraint.isActive = true
     return constraint
 }
 
 @discardableResult
-public func <= (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
+func <= (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
     let constraint = lhs.constraint(lessThanOrEqualToConstant: rhs)
     constraint.isActive = true
     return constraint
 }
 
 @discardableResult
-public func >= <T>(lhs: NSLayoutAnchor<T>, rhs: ConstraintAttribute<T>) -> NSLayoutConstraint {
+func >= <T>(lhs: NSLayoutAnchor<T>, rhs: ConstraintAttribute<T>) -> NSLayoutConstraint {
     let constraint = lhs.constraint(greaterThanOrEqualTo: rhs.anchor, constant: rhs.const)
     constraint.isActive = true
     return constraint
 }
 
 @discardableResult
-public func >= (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
+func >= (lhs: NSLayoutDimension, rhs: CGFloat) -> NSLayoutConstraint {
     let constraint = lhs.constraint(greaterThanOrEqualToConstant: rhs)
     constraint.isActive = true
     return constraint

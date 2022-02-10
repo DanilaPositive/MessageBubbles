@@ -7,9 +7,9 @@
 
 import UIKit
 
-class MessageCell: PreparableTableCell {
+final class MessageCell: PreparableTableCell {
 
-    enum Constants {
+    private enum Constants {
         static let bubbleExtraSpacing: CGFloat = 80
         static let innerSpacing: CGFloat = 4
         static let contentPadding: CGFloat = 8
@@ -127,17 +127,10 @@ class MessageCell: PreparableTableCell {
         guard let calculatedHeight = text?.height(withConstrainedWidth: messageLabelWidth, font: messageFont),
               let calculatedWidth = text?.width(withConstrainedHeight: messageLineHeight, font: messageFont) else { return }
         
-        if calculatedHeight > ceil(messageLineHeight)
-            || calculatedWidth > messageLabelWidth {
-            timeLabelTopConstraint.isActive = true
-            timeLabelBottomConstraint.isActive = false
-            messageLabelRightConstraintToTimeLabel.isActive = false
-            messageLabelRightConstraintToContainerView.isActive = true
-        } else {
-            timeLabelTopConstraint.isActive = false
-            timeLabelBottomConstraint.isActive = true
-            messageLabelRightConstraintToTimeLabel.isActive = true
-            messageLabelRightConstraintToContainerView.isActive = false
-        }
+        let isInOneLine = calculatedHeight > ceil(messageLineHeight) || calculatedWidth > messageLabelWidth
+        timeLabelTopConstraint.isActive = isInOneLine
+        timeLabelBottomConstraint.isActive = !isInOneLine
+        messageLabelRightConstraintToTimeLabel.isActive = !isInOneLine
+        messageLabelRightConstraintToContainerView.isActive = isInOneLine
     }
 }
